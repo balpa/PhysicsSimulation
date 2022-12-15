@@ -103,10 +103,43 @@ class Wall {
   }
 }
 
+class Food {
+  constructor(x, y, radius, startAngle, endAngle, color, ctx) {
+    this.x = x
+    this.y = y
+    this.radius = radius
+    this.startAngle = startAngle
+    this.endAngle = endAngle
+    this.ctx = ctx
+    this.color = color
+  }
+  draw(ctx) {
+    ctx.beginPath()
+    ctx.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle)
+    ctx.fillStyle = `${this.color}`
+    ctx.fill()
+  }
+}
+
+// CREATE OBJECTS
 const box = new Box(100, 100, 50, 50, ctx, 10, 'yellow')
 const box2 = new Box(200, 100, 100, 100, ctx, 10, 'rgba(50,175,100,0.5)')
-
 const wall = new Wall(500, 100, 500, 500, 'white', ctx)
+
+let foods = []
+function createFood(amount) {
+  for (let x = 0; x < amount; x++) {
+    let food = new Food(
+      Math.floor(Math.random() * (canvas.width - 50)),
+      Math.floor(Math.random() * (canvas.height - 50)),
+      10,
+      0, 2 * Math.PI, 'crimson', ctx)
+    foods.push(food)
+  }
+}
+createFood(10)
+console.log(foods)
+console.log(foods.length)
 
 window.addEventListener('keydown', (event) => {
   switch (event.key) {
@@ -165,7 +198,12 @@ function render() {
   box2.gravity(0.1)
   box2.stayInCanvas()
   // WALL - 1
-  wall.draw(ctx)
+  //wall.draw(ctx)
+
+  // FOOD
+  foods.map((food) => {
+    food.draw(ctx)
+  })
 
   detectCollision()
 
