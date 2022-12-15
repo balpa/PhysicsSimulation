@@ -65,9 +65,22 @@ class Box {
   }
 
   stayInCanvas() {
-    if (this.x < 0) { this.x = 0; this.velocity.x = -(this.velocity.x) * 0.2 }
-    if (this.x + this.width > canvas.width) { this.x = canvas.width - this.width; this.velocity.x = 0 }
-    if (this.y < 0) { this.y = 0; this.velocity.y = -(this.velocity.y) * 0.2 }
+    if (this.x < 0) {
+      this.x = 0
+      this.velocity.x = -(this.velocity.x) * 0.2
+    }
+    if (this.x + this.w > canvas.width) {
+      this.x = canvas.width - this.w
+      this.velocity.x = -(this.velocity.x) * 0.2
+    }
+    if (this.y + this.h > canvas.height) {
+      this.y = canvas.height - this.h
+      this.velocity.y = -(this.velocity.y) * 0.2
+    }
+    if (this.y < 0) {
+      this.y = 0
+      this.velocity.y = -(this.velocity.y) * 0.2
+    }
   }
 }
 
