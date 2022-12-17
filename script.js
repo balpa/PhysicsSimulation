@@ -12,6 +12,7 @@ const box = new Box(100, 100, 50, 50, ctx, 10, 'yellow')
 const box2 = new Box(200, 100, 100, 100, ctx, 10, 'rgba(50,175,100,0.5)')
 const wall = new Wall(500, 100, 500, 500, 'white', ctx)
 
+// CREATE FOOD
 let foods = []
 function createFood(amount) {
   for (let x = 0; x < amount; x++) {
@@ -23,7 +24,6 @@ function createFood(amount) {
     foods.push(food)
   }
 }
-//init foods
 createFood(10)
 
 window.addEventListener('keydown', (event) => {
@@ -99,6 +99,7 @@ function render() {
   box.friction(0.006)
   box.gravity(0.1)
   box.stayInCanvas()
+  box.updateColor()
   // BOX - 2
   box2.draw(ctx)
   box2.continiousMove()

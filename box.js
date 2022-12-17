@@ -49,6 +49,11 @@ export class Box {
     this.velocity.y += y
   }
 
+  updateColor() {
+    // change the logic here
+    this.color = `rgb(${50 * this.velocity.x},${255 - (this.velocity.x * this.velocity.y * 10)},0)`
+  }
+
   continiousMove() {
     this.x += this.velocity.x
     this.y += this.velocity.y
