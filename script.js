@@ -1,125 +1,11 @@
+import { Box } from './box.js'
+import { Wall } from './wall.js'
+import { Food } from './food.js'
 
 
 let canvas = document.getElementById('canvas')
 canvas.style.backgroundColor = 'black'
 let ctx = canvas.getContext("2d")
-
-class Box {
-  constructor(x, y, w, h, ctx, mass, color) {
-    this.x = x
-    this.y = y
-    this.w = w
-    this.h = h
-    this.ctx = ctx
-    this.mass = mass
-    this.color = color
-    this.velocity = {
-      x: 0,
-      y: 0
-    }
-  }
-
-  gravity(val) {
-    this.y += val
-  }
-
-  getCoordinates() {
-    let coordinates = {
-      x: this.x,
-      y: this.y,
-      w: this.w,
-      h: this.h
-    }
-    return coordinates
-  }
-
-  logVelocity() {
-    ctx.font = "20px Arial"
-    ctx.fillStyle = 'red'
-    ctx.fillText(`
-    Velocity X: ${this.velocity.x.toFixed(2)}
-    Velocity Y: ${this.velocity.y.toFixed(2)}
-    Position X: ${this.x.toFixed(2)}
-    Position Y: ${this.y.toFixed(2)}
-    `, 0, 25)
-  }
-
-  draw(ctx) {
-    this.ctx.fillStyle = `${this.color}`
-    this.ctx.fillRect(this.x, this.y, this.w, this.h)
-  }
-
-  updatePosition(x, y) {
-    this.velocity.x += x
-    this.velocity.y += y
-  }
-
-  continiousMove() {
-    this.x += this.velocity.x
-    this.y += this.velocity.y
-  }
-
-  friction(amount) {
-    this.velocity.x >= 0.01 ? this.velocity.x -= amount : this.velocity.x += amount
-    this.velocity.y >= 0.01 ? this.velocity.y -= amount : this.velocity.y += amount
-  }
-
-  stayInCanvas() {
-    if (this.x < 0) {
-      this.x = 0
-      this.velocity.x = -(this.velocity.x) * 0.2
-    }
-    if (this.x + this.w > canvas.width) {
-      this.x = canvas.width - this.w
-      this.velocity.x = -(this.velocity.x) * 0.2
-    }
-    if (this.y + this.h > canvas.height) {
-      this.y = canvas.height - this.h
-      this.velocity.y = -(this.velocity.y) * 0.2
-    }
-    if (this.y < 0) {
-      this.y = 0
-      this.velocity.y = -(this.velocity.y) * 0.2
-    }
-  }
-}
-
-class Wall {
-  constructor(x, y, toX, toY, color, ctx) {
-    this.x = x
-    this.y = y
-    this.toX = toX
-    this.toY = toY
-    this.color = color
-    this.ctx = ctx
-  }
-
-  draw(ctx) {
-    ctx.beginPath()
-    ctx.moveTo(this.x, this.y)
-    ctx.lineTo(this.toX, this.toY)
-    ctx.strokeStyle = `${this.color}`
-    ctx.stroke()
-  }
-}
-
-class Food {
-  constructor(x, y, radius, startAngle, endAngle, color, ctx) {
-    this.x = x
-    this.y = y
-    this.radius = radius
-    this.startAngle = startAngle
-    this.endAngle = endAngle
-    this.ctx = ctx
-    this.color = color
-  }
-  draw(ctx) {
-    ctx.beginPath()
-    ctx.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle)
-    ctx.fillStyle = `${this.color}`
-    ctx.fill()
-  }
-}
 
 // CREATE OBJECTS
 const box = new Box(100, 100, 50, 50, ctx, 10, 'yellow')
@@ -137,9 +23,8 @@ function createFood(amount) {
     foods.push(food)
   }
 }
+//init foods
 createFood(10)
-console.log(foods)
-console.log(foods.length)
 
 window.addEventListener('keydown', (event) => {
   switch (event.key) {
@@ -171,8 +56,8 @@ window.addEventListener('keydown', (event) => {
 })
 
 function detectCollision() {
-  box1Coords = box.getCoordinates()
-  box2Coords = box2.getCoordinates()
+  let box1Coords = box.getCoordinates()
+  let box2Coords = box2.getCoordinates()
 
   if (box1Coords.x < box2Coords.x + box2Coords.w &&
     box1Coords.x + box1Coords.w > box2Coords.x &&
@@ -182,9 +67,32 @@ function detectCollision() {
   }
 }
 
+function logVelocity() {
+
+  let box1Velocity = box.getVelocity()
+  let box2Velocity = box2.getVelocity()
+
+  ctx.font = "20px Arial"
+  ctx.fillStyle = 'red'
+  ctx.fillText(`
+    Box 1 Velocity X: ${box1Velocity.velocityX} 
+    Box 1 Velocity Y: ${box1Velocity.velocityY}
+    Box 1 Position X: ${box1Velocity.positionX}
+    Box 1 Position Y: ${box1Velocity.positionY}
+    `, 0, 25)
+  ctx.fillText(`
+    Box 2 Velocity X: ${box2Velocity.velocityX} 
+    Box 2 Velocity Y: ${box2Velocity.velocityY}
+    Box 2 Position X: ${box2Velocity.positionX}
+    Box 2 Position Y: ${box2Velocity.positionY}
+    `, 0, 50)
+
+}
+
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  box.logVelocity()
+  // log velocity-position data
+  logVelocity()
   // BOX - 1
   box.draw(ctx)
   box.continiousMove()
@@ -201,9 +109,9 @@ function render() {
   //wall.draw(ctx)
 
   // FOOD
-  foods.map((food) => {
-    food.draw(ctx)
-  })
+  // foods.map((food) => {
+  //   food.draw(ctx)
+  // })
 
   detectCollision()
 
