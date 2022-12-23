@@ -82,4 +82,9 @@ export class Box {
       this.velocity.y = -(this.velocity.y) * 0.2
     }
   }
+
+  changeVelocity(percent) {
+    this.velocity.x = -(this.velocity.x) * percent
+    this.velocity.y = -(this.velocity.y) * percent
+  }
 }

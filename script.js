@@ -64,6 +64,8 @@ function detectCollision() {
     box1Coords.y < box2Coords.y + box2Coords.h &&
     box1Coords.y + box1Coords.h > box2Coords.y) {
     console.log('COLLISION')
+    box.changeVelocity(0.8)
+    box2.changeVelocity(0.8)
   }
 }
 
