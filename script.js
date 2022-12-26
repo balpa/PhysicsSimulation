@@ -10,7 +10,7 @@ let ctx = canvas.getContext("2d")
 // CREATE OBJECTS
 const box = new Box(100, 100, 50, 50, ctx, 10, 'yellow')
 const box2 = new Box(200, 100, 100, 100, ctx, 10, 'rgba(50,175,100,0.5)')
-const wall = new Wall(500, 100, 500, 500, 'white', ctx)
+const wall = new Wall(500, Math.floor(Math.random() * canvas.height), 500, canvas.height, 'white', ctx)
 
 // CREATE FOOD
 let foods = []
@@ -58,6 +58,10 @@ window.addEventListener('keydown', (event) => {
 function detectCollision() {
   let box1Coords = box.getCoordinates()
   let box2Coords = box2.getCoordinates()
+
+  let wallCoords = wall.getCoordinates()
+
+
 
   if (box1Coords.x < box2Coords.x + box2Coords.w &&
     box1Coords.x + box1Coords.w > box2Coords.x &&
@@ -109,7 +113,7 @@ function render() {
   box2.gravity(0.1)
   box2.stayInCanvas()
   // WALL - 1
-  //wall.draw(ctx)
+  wall.draw(ctx)
 
   // FOOD
   // foods.map((food) => {
