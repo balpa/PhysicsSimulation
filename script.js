@@ -61,8 +61,6 @@ function detectCollision() {
 
   let wallCoords = wall.getCoordinates()
 
-
-
   if (box1Coords.x < box2Coords.x + box2Coords.w &&
     box1Coords.x + box1Coords.w > box2Coords.x &&
     box1Coords.y < box2Coords.y + box2Coords.h &&
@@ -78,17 +76,13 @@ function logVelocity() {
   let box1Velocity = box.getVelocity()
   let box2Velocity = box2.getVelocity()
 
-  ctx.font = "20px Arial"
-  ctx.fillStyle = 'red'
+  ctx.font = "bold 14px verdana, sans-serif"
+  ctx.fillStyle = 'white'
   ctx.fillText(`
-    Box 1 Velocity X: ${box1Velocity.velocityX} 
-    Box 1 Velocity Y: ${box1Velocity.velocityY}
     Box 1 Position X: ${box1Velocity.positionX}
     Box 1 Position Y: ${box1Velocity.positionY}
     `, 0, 25)
   ctx.fillText(`
-    Box 2 Velocity X: ${box2Velocity.velocityX} 
-    Box 2 Velocity Y: ${box2Velocity.velocityY}
     Box 2 Position X: ${box2Velocity.positionX}
     Box 2 Position Y: ${box2Velocity.positionY}
     `, 0, 50)

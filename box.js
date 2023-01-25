@@ -40,8 +40,19 @@ export class Box {
   }
 
   draw(ctx) {
+
+    let textXPosition = this.x + 5
+
+    let velocityXText = `vX: ${this.getVelocity().velocityX}`
+    let velocityYText = `vY: ${this.getVelocity().velocityY}`
+
     this.ctx.fillStyle = `${this.color}`
     this.ctx.fillRect(this.x, this.y, this.w, this.h)
+
+    this.ctx.fillStyle = 'black'
+    this.ctx.font = "bold 8px verdana, sans-serif"
+    this.ctx.fillText(velocityXText, textXPosition, this.y + 10)
+    this.ctx.fillText(velocityYText, textXPosition, this.y + 25)
   }
 
   updatePosition(x, y) {
